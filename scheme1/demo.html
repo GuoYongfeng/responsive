@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>移动端布局示例页面</title>
+  <meta charset="utf-8" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="yes" name="apple-touch-fullscreen" />
+  <meta content="telephone=no,email=no" name="format-detection" />
+  <meta content="maximum-dpr=2" name="flexible" />
+  <meta content="modeName=750-12" name="grid" />
+  <link rel="stylesheet" href="build/flexible.css">
+  <script src="build/flexible_css.js"></script>
+  <script src="build/flexible.js"></script>
+  <style>
+    .content{
+      margin: 1rem 2rem;
+    }
+    .box1 {
+      background-color: #e7e7e7;
+      width: 100%;
+      padding: 0.2rem;
+    }
+    h3 {
+      font-size: 0.2rem;
+    }
+    p {
+      font-size: 0.18rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="box1">
+      <h3>1rem = 75px </h3><br>
+      <p>1. 可以下载sublime的插件CSSREM自动进行单位的换算，将你从设计稿中获得的px尺寸转换成rem单位</p>
+      <p>2. 使用gulp可以用这个插件PostCSS(px2rem)</p>
+      <h3>gulp代码的配置</h3>
+      <pre>
+        <code>
+
+          var gulp = require('gulp');
+          var postcss = require('gulp-postcss');
+          var px2rem = require('postcss-px2rem');
+
+          gulp.task('default', function() {
+              var processors = [px2rem({remUnit: 75})];
+              return gulp.src('./src/*.css')
+                  .pipe(postcss(processors))
+                  .pipe(gulp.dest('./dest'));
+          });
+        </code>
+      </pre>
+      <h3>css的源代码</h3>
+      <pre>
+        <code>
+          .selector {
+              width: 150px;
+              height: 64px; /*px*/
+              font-size: 28px; /*px*/
+              border: 1px solid #ddd; /*no*/
+          }
+        </code>
+      </pre>
+
+      <h3>会帮你编译成这样</h3>
+      <pre>
+        <code>
+          .selector {
+              width: 2rem;
+              border: 1px solid #ddd;
+          }
+          [data-dpr="1"] .selector {
+              height: 32px;
+              font-size: 14px;
+          }
+          [data-dpr="2"] .selector {
+              height: 64px;
+              font-size: 28px;
+          }
+          [data-dpr="3"] .selector {
+              height: 96px;
+              font-size: 42px;
+          }
+        </code>
+      </pre>
+    </div>
+  </div>
+</body>
+</html>
